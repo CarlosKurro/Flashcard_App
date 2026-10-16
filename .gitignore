@@ -12,8 +12,11 @@ coverage/
 # Local images and user data
 uploads/
 local-data/
+public/sample.*
 
 # Logs and OS files
 *.log
 .DS_Store
 Thumbs.db
+*.traineddata
+*.traineddata.gz

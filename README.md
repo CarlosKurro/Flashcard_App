@@ -1,55 +1,97 @@
-# Kanji Flashcard
+# KanjiFlash — Ứng dụng Flashcard Học Từ Vựng Tiếng Nhật PWA
 
-Ứng dụng flashcard học từ vựng tiếng Nhật, hướng tới sử dụng trên web và điện thoại qua PWA.
+Ứng dụng Flashcard học từ vựng tiếng Nhật thông minh cho người Việt, hoạt động trên nền tảng Web và thiết bị di động (Android / iOS) thông qua Progressive Web App (PWA).
 
-## Trạng thái
+---
 
-Repo mới được khởi tạo. Chưa có mã ứng dụng hoặc lệnh chạy; công nghệ và nguồn dữ liệu sẽ được kiểm chứng ở bước triển khai.
+## 🌟 Chức năng nổi bật
 
-## Chức năng đã thống nhất
+### 1. Nhập ảnh bảng từ vựng (Client-side OCR)
+- Nhận diện trực tiếp trên trình duyệt bằng **Tesseract.js** (không cần gửi ảnh lên server cá nhân, bảo mật dữ liệu tuyệt đối).
+- Tách chính xác bảng 3 cột: **Từ tiếng Nhật (Kanji/cụm từ) – Hiragana – Nghĩa tiếng Việt có dấu**.
+- Giữ nguyên các cụm từ (ví dụ `都合がいい`), không bị cắt vụn ký tự.
+- Cho phép chỉnh sửa từng ô, thêm/xóa dòng, chọn hoặc bỏ chọn hàng trước khi lưu vào bộ thẻ.
+- **Minh bạch chất lượng**: Giữ nguyên bản chép gốc từ ảnh và hiển thị cảnh báo khi nghĩa trong ảnh khác với từ điển chuẩn (ví dụ trường hợp `涼しい` = ấm áp / `低い` = nhẹ).
 
-### Nhập từ ảnh
+### 2. Tra cứu từ đơn tiếng Nhật thông minh
+- Nhập từ hoặc cụm từ tiếng Nhật (Kanji, Kana, Romaji).
+- **Kiến trúc Hybrid**:
+  - Tra cứu tức thì trong bộ từ điển ngoại tuyến tích hợp sẵn (JMdict N5-N3).
+  - Tra cứu mở rộng qua Mazii API trực tuyến khi có kết nối Internet.
+- Hỗ trợ từ nhiều cách đọc (ví dụ chữ `生` cho ra `なま`, `せい`, `うまれる`...) và nhiều tầng nghĩa tiếng Việt cho người học tự chọn.
+- Hỗ trợ phương án nhập/sửa tay khi từ chưa có trong từ điển.
 
-- Người học chọn ảnh bảng từ vựng gồm ba cột: từ tiếng Nhật, Hiragana và nghĩa tiếng Việt.
-- Nhận diện chữ bằng OCR và ghép các ô theo đúng từng hàng.
-- Giữ nguyên từ hoặc cụm từ, ví dụ `都合がいい`, thay vì tách riêng từng ký tự Kanji.
-- Hiển thị bảng kết quả có thể chỉnh sửa trước khi tạo flashcard.
-- Giữ nội dung gốc khi đề xuất sửa cách đọc hoặc nghĩa; để người học xem và lựa chọn.
+### 3. Học Flashcard & Quản lý bộ thẻ
+- Tạo, đổi tên, xóa và phân loại các bộ thẻ theo chủ đề học tập.
+- **Thẻ 3D Flip trực quan**: Mặt trước hiển thị chữ Hán to rõ, chạm hoặc nhấn `Space` để lật xem Hiragana và nghĩa tiếng Việt.
+- **Hệ thống đánh giá ghi nhớ**: Đánh dấu "Chưa nhớ" (Phím `1`) hoặc "Đã nhớ" (Phím `2`).
+- Thống kê tỷ lệ thuộc bài, hiệu ứng ăn mừng (`confetti`) và tùy chọn ôn tập lại các thẻ chưa nhớ.
 
-### Nhập từ tiếng Nhật
+### 4. Lưu trữ bền vững & Hoạt động Ngoại tuyến (PWA)
+- Lưu trữ toàn bộ trên thiết bị qua **IndexedDB**: Dữ liệu không bị mất khi tải lại trang hoặc đóng trình duyệt.
+- Hỗ trợ **Sao lưu & Phục hồi JSON**: Xuất/nhập file sao lưu kèm kiểm tra schema nghiêm ngặt, xử lý từ trùng lặp an toàn.
+- **PWA Standalone**: Có thể "Thêm vào màn hình chính" (Add to Home Screen) trên iPhone và Android; ôn tập các bộ thẻ đã lưu hoàn toàn khi mất mạng.
 
-- Người học nhập một từ tiếng Nhật.
-- Tra cứu để bổ sung Hiragana và nghĩa tiếng Việt.
-- Cho phép lựa chọn khi từ có nhiều cách đọc hoặc nhiều nghĩa.
-- Cho phép sửa kết quả trước khi lưu thành flashcard.
+---
 
-## Hướng kỹ thuật dự kiến
+## 🛠 Yêu cầu môi trường & Cài đặt
 
-- React, TypeScript và Vite cho giao diện thích ứng với máy tính và điện thoại.
-- PWA để hỗ trợ thêm ứng dụng vào màn hình chính và học ngoại tuyến.
-- Thử nghiệm Tesseract.js cho OCR ngay trên trình duyệt.
-- Ưu tiên lưu dữ liệu trên thiết bị ở bản đầu; xem xét tài khoản và đồng bộ sau.
-- Chọn nguồn từ điển Nhật–Việt sau khi kiểm tra độ phủ, chất lượng và giấy phép.
+- **Node.js**: Phiên bản 18 trở lên (Khuyến nghị Node.js 20 hoặc 24).
+- **Trình duyệt**: Chrome, Edge, Safari, Firefox phiên bản hiện đại.
 
-Đây là các hướng dự kiến, chưa phải các chức năng đã được triển khai.
+### Các lệnh thực thi:
 
-## Các điểm cần kiểm chứng
+```bash
+# 1. Cài đặt các gói phụ thuộc
+npm install
 
-- Chất lượng OCR tiếng Nhật và dấu tiếng Việt trên ảnh thực tế.
-- Khả năng ghép hàng, cột khi ảnh lệch, mờ hoặc có bố cục khác nhau.
-- Phân biệt lỗi nhận diện với lỗi có sẵn trong tài liệu nguồn.
-- Độ phủ từ điển và cách xử lý từ chưa có dữ liệu, nhiều cách đọc hoặc nhiều nghĩa.
-- Giới hạn dung lượng và băng thông của các dịch vụ miễn phí trước khi đưa lên mạng.
+# 2. Khởi chạy máy chủ phát triển (Dev Server)
+npm run dev
 
-## Bước tiếp theo
+# 3. Chạy bộ kiểm thử tự động (Vitest)
+npm test
 
-1. Khởi tạo giao diện và bảng chỉnh sửa ba cột.
-2. Thử OCR với ảnh mẫu và đánh giá kết quả.
-3. Thử nguồn tra cứu cách đọc và nghĩa tiếng Việt.
-4. Xây luồng tạo bộ thẻ và học flashcard.
+# 4. Biên dịch bản phân phối Production
+npm run build
 
-## Quy ước
+# 5. Xem trước bản phân phối
+npm run preview
+```
 
-- Không đưa khóa API, tệp `.env` hoặc dữ liệu cá nhân vào Git.
-- Thư mục `uploads/` và `local-data/` dành cho dữ liệu thử nghiệm cục bộ, được bỏ qua bởi Git.
-- Chưa chọn giấy phép phát hành mã nguồn; sẽ bổ sung khi xác định cách chia sẻ dự án.
+---
+
+## 📖 Hướng dẫn sử dụng nhanh
+
+### Cách nhập bảng từ ảnh tham chiếu:
+1. Mở ứng dụng, vào tab **Nhập liệu** -> **Nhập ảnh bảng (OCR)**.
+2. Bấm nút **Chọn ảnh từ máy** (hoặc kéo thả ảnh bảng, hoặc bấm **Nạp ảnh tham chiếu mẫu**).
+3. Đợi tiến trình quét hoàn tất 100%.
+4. Kiểm tra dữ liệu tại **Bảng từ vựng xem trước** ở bên dưới. Sửa các ô nếu cần.
+5. Chọn bộ thẻ đích và bấm **Lưu thẻ vào bộ**.
+
+### Cách tra cứu từ đơn:
+1. Vào tab **Nhập liệu** -> **Tra từ đơn tiếng Nhật**.
+2. Nhập từ cần tra (ví dụ: `学校`, `生`, `食べる`) và bấm **Tra cứu**.
+3. Chọn cách đọc và nghĩa tiếng Việt ưng ý, sau đó bấm **Thêm vào bảng xem trước**.
+4. Chọn bộ thẻ và bấm **Lưu thẻ vào bộ**.
+
+### Cài đặt PWA lên điện thoại:
+- **Trên iOS (Safari)**: Bấm biểu tượng Chia sẻ (Share) -> chọn **Thêm vào MH chính (Add to Home Screen)**.
+- **Trên Android (Chrome)**: Bấm menu 3 chấm -> chọn **Cài đặt ứng dụng** hoặc **Thêm vào màn hình chính**.
+
+---
+
+## 📚 Nguồn dữ liệu & Giấy phép
+
+- **OCR Engine**: Tesseract.js ([Apache License 2.0](https://github.com/naptha/tesseract.js/blob/master/LICENSE)).
+- **Dữ liệu từ điển ngoại tuyến**: Tổng hợp từ JMdict thuộc bản quyền của Electronic Dictionary Research and Development Group (EDRDG), sử dụng theo giấy phép [Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](http://www.edrdg.org/edrdg/licence.html).
+- **Dữ liệu trực tuyến**: Mazii Open Search API.
+- Chi tiết xem tại [docs/DATA_SOURCES.md](file:///c:/Users/Lenovo/Documents/Flashcard/docs/DATA_SOURCES.md).
+
+---
+
+## ⚠️ Giới hạn & Lưu ý
+
+1. **Lần chạy OCR đầu tiên**: Trình duyệt sẽ tải model dữ liệu ngôn ngữ Tesseract (`jpn` ~15MB và `vie` ~2MB). Trình duyệt sẽ tự động cache lại cho các lần quét tiếp theo.
+2. **Chế độ Ngoại tuyến**: Chức năng học flashcard và tra từ điển N5-N3 hoạt động 100% khi mất mạng. Chức năng tra từ nâng cao ngoài kho dữ liệu cục bộ yêu cầu kết nối Internet.
+3. **Dữ liệu lưu trữ**: Dữ liệu lưu cục bộ trên trình duyệt thiết bị. Hãy định kỳ sử dụng chức năng **Sao lưu JSON** để bảo vệ dữ liệu học tập của bạn.
