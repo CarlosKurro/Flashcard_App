@@ -1,0 +1,19 @@
+# Dependencies and build output
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+
+# Local images and user data
+uploads/
+local-data/
+
+# Logs and OS files
+*.log
+.DS_Store
+Thumbs.db
